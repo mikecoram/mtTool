@@ -1,0 +1,53 @@
+body {
+	font-family: "Verdana", Sans, serif;
+	font-size:15px;
+}
+
+#container {
+	margin-left:auto;
+	margin-right:auto;
+	width:630px;
+}
+
+.output-title {
+	padding-bottom: 3px;
+	font-weight:bold;
+}
+
+.output-block {
+	float:left;
+	width:90px;
+}
+
+.chord-output {
+	padding:5px;
+}
+
+.chordnote {
+	padding:5px;
+}
+
+.chordtype {
+	padding:4px;
+	padding-bottom:10px;
+}
+
+.notes {
+	padding:5px;
+}
+
+.roman {
+	padding:3px;
+	font-weight:bold;
+}
+
+#input {
+	width:50%;
+	float:left;
+	text-align:right;
+}
+
+#title {
+	float:left;
+	width:50%;
+}
