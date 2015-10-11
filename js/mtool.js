@@ -1,61 +1,45 @@
-//populate root note drop down menu
-var inputRoot = document.getElementById("inputRoot");
-for (var i = 0; i < note.length; i++) {
-	var rootOption = document.createElement("option");
-	rootOption.text = note[i];
-	rootOption.value = note[i];
-	inputRoot.add(rootOption);
-}
-
-//populate key type drop down menu
-var inputType = document.getElementById("inputType");
-for (var i = 0; i < pickType.length; i++) {
-	var typeOption = document.createElement("option");
-	typeOption.text = pickType[i];
-	typeOption.value = pickType[i];
-	inputType.add(typeOption);
-}
+//populate note and key type drop down boxs
+populateDropBox("inputRoot",note);
+populateDropBox("inputType",keyTypes);
 
 function pressInputSubmit() {
-	//find matching key type
-	for (var i = 0; i < keyTypes.length; i++) {
-		if (inputType.value == keyTypes[i]) {
-			keyFound = true;
+	var scaleNotes = shuffleNotes(inputRoot.value);
+	var keyNotes = getScale(inputRoot.value,inputType.value);
+
+	for(var i = 0; i < keyNotes.length; i++) {
+		//display root notes
+		document.getElementById("o"+(i+1)+"chordnote").innerHTML
+		=keyNotes[i];
+
+		//store relative chord at position from scale
+		var cStore = inputType.value + "chord" + (i+1);
+		var retChord = JSON.parse(localStorage.getItem(cStore));
+		//display chord types
+		document.getElementById("o"+(i+1)+"chordtype").innerHTML=
+		retChord.typeName;
+		//store chord type information
+		var retType = JSON.parse(localStorage.getItem(inputType.value));
+
+		//reset chord breakdown output
+		document.getElementById("o"+(i+1)+"notes").innerHTML="";
+		//display chord breakdown
+		for(var j = 1; j <= retType.noteAmount; j++) {
+			var nStore = retChord.typeName + "note" + j;
+			var retNote = JSON.parse(localStorage.getItem(nStore));
+			var outputNote=getNote(keyNotes[i],retNote.gapFromRoot);
+			document.getElementById("o"+(i+1)+"notes").innerHTML+=
+			retNote.division+'\t'+outputNote+"<br></br>";
 		}
 	}
+}
 
-	var noteDisplay = document.createElement("div");
-	noteDisplay.class = "note";
-	noteDisplay.id = "notedisplay";
-
-	//find chords & notes
-	if (keyFound == true) { 
-		var scaleNotes = shuffleNotes(inputRoot.value);
-		var keyNotes = getNotes(inputRoot.value,inputType.value);
-
-		for(var i = 0; i < keyNotes.length; i++) {
-			document.getElementById("o"+(i+1)+"notes").innerHTML="";
-
-			//display root notes
-			document.getElementById("o"+(i+1)+"chordnote").innerHTML
-			=keyNotes[i];
-
-			//display chord types
-			var cStore = inputType.value + "chord" + (i+1);
-			var retChord = JSON.parse(localStorage.getItem(cStore));
-			document.getElementById("o"+(i+1)+"chordtype").innerHTML=
-			retChord.typeName;
-
-			//display chord notes
-			for(var j = 1; j <= 3; j++) {
-				var nStore = retChord.typeName + "note" + j;
-				var retNote = JSON.parse(localStorage.getItem(nStore));
-				var outputNote=getNote(keyNotes[i],retNote.gapFromRoot);
-
-				document.getElementById("o"+(i+1)+"notes").innerHTML+=
-				retNote.division+'\t'+outputNote+"<br></br>";
-			}
-		}
+function populateDropBox(elementName,dArray) {
+	var dropBox = document.getElementById(elementName);
+	for (var i = 0; i < dArray.length; i++) {
+		var option = document.createElement("option");
+		option.text = dArray[i];
+		option.value = dArray[i];
+		dropBox.add(option);
 	}
 }
 
@@ -64,7 +48,7 @@ function getNote(rootNote,gap) {
 	return noteScale[gap];
 }
 
-function getNotes(keyRoot,keyType) {
+function getScale(keyRoot,keyType) {
 	var shuffled = shuffleNotes(keyRoot);
 	var scale = new Array(7);
 	var break1 = 0; var break2 = 0;
@@ -86,25 +70,19 @@ function getNotes(keyRoot,keyType) {
 }
 
 function shuffleNotes(keyRoot) {
-	//shuffle array
 	var shuffle = new Array(note.length);
 	var startNote = 0;
-
-	//find start note in note array
 	for (var i = 0; i < note.length; i++) {
 		if(note[i] == keyRoot) {
 			startNote = i;
 			break;
 		}
 	}
-
-	//fill shuffle array with all notes at new starting position
 	var j = startNote;
 	for (var i = 0; i < note.length; i++) {
 		if (j > 11) { j = 0;}
 		shuffle[i] = note[j];
 		j++;
 	}
-
 	return shuffle;
 }
