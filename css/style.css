@@ -3,37 +3,50 @@ body {
 	font-size:15px;
 }
 
+.clear {
+	clear:both;
+}
+
 #container {
 	margin-left:auto;
 	margin-right:auto;
-	width:630px;
+	width:750px;
 }
 
 .output-title {
-	padding-bottom: 3px;
+	padding-bottom:3px;
 	font-weight:bold;
 }
 
 .output-block {
 	float:left;
-	width:90px;
+	width:14%;
+}
+
+.note-divi {
+	width:40%;
+	float:left;
+	font-weight:bold;
+	font-size:12px;
+}
+
+.note {
+	width:60%;
+	float:left;
+	font-size:13px;
 }
 
 .chord-output {
 	padding:5px;
 }
 
-.chordnote {
+.chord-note {
 	padding:5px;
 }
 
-.chordtype {
+.chord-type {
 	padding:4px;
 	padding-bottom:10px;
-}
-
-.notes {
-	padding:5px;
 }
 
 .roman {
@@ -42,12 +55,12 @@ body {
 }
 
 #input {
-	width:50%;
+	width:70%;
 	float:left;
 	text-align:right;
 }
 
 #title {
 	float:left;
-	width:50%;
+	width:30%;
 }

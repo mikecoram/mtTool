@@ -21,14 +21,18 @@ function pressInputSubmit() {
 		var retType = JSON.parse(localStorage.getItem(inputType.value));
 
 		//reset chord breakdown output
-		document.getElementById("o"+(i+1)+"notes").innerHTML="";
+		document.getElementById("o"+(i+1)+"note").innerHTML="";
+		document.getElementById("o"+(i+1)+"notedivi").innerHTML="";
 		//display chord breakdown
 		for(var j = 1; j <= retType.noteAmount; j++) {
 			var nStore = retChord.chordType + "note" + j;
 			var retNote = JSON.parse(localStorage.getItem(nStore));
 			var outputNote=getNote(keyNotes[i],retNote.gapFromRoot);
-			document.getElementById("o"+(i+1)+"notes").innerHTML+=
-			retNote.division+'\t'+outputNote+"<br></br>";
+			
+			document.getElementById("o"+(i+1)+"notedivi").innerHTML+=
+			retNote.division+"<br>";
+			document.getElementById("o"+(i+1)+"note").innerHTML+=
+			outputNote+"<br>";
 		}
 
 	}
