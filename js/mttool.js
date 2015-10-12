@@ -16,7 +16,7 @@ function pressInputSubmit() {
 		var retChord = JSON.parse(localStorage.getItem(cStore));
 		//display chord types
 		document.getElementById("o"+(i+1)+"chordtype").innerHTML=
-		retChord.typeName;
+		retChord.chordType;
 		//store chord type information
 		var retType = JSON.parse(localStorage.getItem(inputType.value));
 
@@ -24,12 +24,13 @@ function pressInputSubmit() {
 		document.getElementById("o"+(i+1)+"notes").innerHTML="";
 		//display chord breakdown
 		for(var j = 1; j <= retType.noteAmount; j++) {
-			var nStore = retChord.typeName + "note" + j;
+			var nStore = retChord.chordType + "note" + j;
 			var retNote = JSON.parse(localStorage.getItem(nStore));
 			var outputNote=getNote(keyNotes[i],retNote.gapFromRoot);
 			document.getElementById("o"+(i+1)+"notes").innerHTML+=
 			retNote.division+'\t'+outputNote+"<br></br>";
 		}
+
 	}
 }
 

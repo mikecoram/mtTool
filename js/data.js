@@ -5,32 +5,32 @@ var note = ["A", "A#/Bb", "B", "C", "C#/Db", "D", "D#/Eb",
 var keyTypes = ["major", "minor"];
 var chordTypes = ["major", "minor", "augmented", "diminished"];
 //Relative chord and note details
-function relChord(inputChordName, inputKeyName, inputDegree) {
+function relChord(inputChordType, inputKeyName, inputDegree) {
 	this.chordType = inputChordType;
 	this.keyName = inputKeyName;
 	this.degree = inputDegree;
-}
-function chordType(inputChordType,inputNoteAmount) {
-	this.chordType = inputChordType;
-	this.noteAmount = inputNoteAmount;
 }
 function relNote(inputChordType, inputGap, inputDivision) {
 	this.chordType = inputChordType;
 	this.gapFromRoot = inputGap;
 	this.division = inputDivision;
 }
+function chordType(inputChordType,inputNoteAmount) {
+	this.chordType = inputChordType;
+	this.noteAmount = inputNoteAmount;
+}
 //Storage functions
-function storeChordType(name,amount) {
-	var sType = new chordType(name,amount);
-	localStorage.setItem(name, JSON.stringify(sType));
+function storeChord(name,type,key,degree) {
+	var sChord = new relChord(type,key,degree);
+	localStorage.setItem(name, JSON.stringify(sChord));
 }
 function storeNote(name,chord,gap,degree) {
 	var sNote = new relNote(chord,gap,degree);
 	localStorage.setItem(name, JSON.stringify(sNote));
 }
-function storeChord(name,type,key,degree) {
-	var sChord = new relChord(type,key,degree);
-	localStorage.setItem(name, JSON.stringify(sChord));
+function storeChordType(name,amount) {
+	var sType = new chordType(name,amount);
+	localStorage.setItem(name, JSON.stringify(sType));
 }
 
 //major chord
