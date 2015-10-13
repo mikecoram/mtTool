@@ -2,13 +2,26 @@
 populateDropBox("inputRoot",note);
 populateDropBox("inputType",keyTypes);
 
+function populateDropBox(elementName,dArray) {
+	var dropBox = document.getElementById(elementName);
+	for (var i = 0; i < dArray.length; i++) {
+		var option = document.createElement("option");
+		option.text = dArray[i];
+		option.value = dArray[i];
+		dropBox.add(option);
+	}
+}
+
 function pressInputSubmit() {
 	var scaleNotes = shuffleNotes(inputRoot.value);
 	var keyNotes = getScale(inputRoot.value,inputType.value);
 
+	//display output div
+	document.getElementById("output").style.display="inline";
+
 	for(var i = 0; i < keyNotes.length; i++) {
 		//display root notes
-		document.getElementById("o"+(i+1)+"chordnote").innerHTML
+		document.getElementById("o"+(i+1)+"chordroot").innerHTML
 		=keyNotes[i];
 
 		//store relative chord at position from scale
@@ -18,7 +31,11 @@ function pressInputSubmit() {
 		document.getElementById("o"+(i+1)+"chordtype").innerHTML=
 		retChord.chordType;
 		//store chord type information
-		var retType = JSON.parse(localStorage.getItem(inputType.value));
+		var retType = JSON.parse(localStorage.getItem(retChord.chordType));
+		console.log(retType.typeColor);
+		console.log("o"+(i+1));
+
+		document.getElementById("o"+(i+1)).style.backgroundColor = retType.typeColor;
 
 		//reset chord breakdown output
 		document.getElementById("o"+(i+1)+"note").innerHTML="";
@@ -35,16 +52,6 @@ function pressInputSubmit() {
 			outputNote+"<br>";
 		}
 
-	}
-}
-
-function populateDropBox(elementName,dArray) {
-	var dropBox = document.getElementById(elementName);
-	for (var i = 0; i < dArray.length; i++) {
-		var option = document.createElement("option");
-		option.text = dArray[i];
-		option.value = dArray[i];
-		dropBox.add(option);
 	}
 }
 

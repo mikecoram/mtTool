@@ -2,8 +2,10 @@
 //Notes, chords & keys
 var note = ["A", "A#/Bb", "B", "C", "C#/Db", "D", "D#/Eb", 
 				"E", "F", "F#/Gb", "G", "G#/Ab"];
+
 var keyTypes = ["major", "minor"];
 var chordTypes = ["major", "minor", "augmented", "diminished"];
+
 //Relative chord and note details
 function relChord(inputChordType, inputKeyName, inputDegree) {
 	this.chordType = inputChordType;
@@ -15,9 +17,10 @@ function relNote(inputChordType, inputGap, inputDivision) {
 	this.gapFromRoot = inputGap;
 	this.division = inputDivision;
 }
-function chordType(inputChordType,inputNoteAmount) {
+function chordType(inputChordType,inputNoteAmount,inputColor) {
 	this.chordType = inputChordType;
 	this.noteAmount = inputNoteAmount;
+	this.typeColor = inputColor;
 }
 //Storage functions
 function storeChord(name,type,key,degree) {
@@ -28,23 +31,26 @@ function storeNote(name,chord,gap,degree) {
 	var sNote = new relNote(chord,gap,degree);
 	localStorage.setItem(name, JSON.stringify(sNote));
 }
-function storeChordType(name,amount) {
-	var sType = new chordType(name,amount);
+function storeChordType(name,amount,color) {
+	var sType = new chordType(name,amount,color);
 	localStorage.setItem(name, JSON.stringify(sType));
 }
 
 //major chord
-storeChordType("major",3);
+var majcolor = "#FFFF9D"
+storeChordType("major",3,majcolor);
 storeNote("majornote1","major",0,"I");
 storeNote("majornote2","major",4,"III");
 storeNote("majornote3","major",7,"V");
 //minor chord
-storeChordType("minor",3);
+var mincolor = "#BEEB9F"
+storeChordType("minor",3,mincolor);
 storeNote("minornote1","minor",0,"I");
 storeNote("minornote2","minor",3,"IIIb");
 storeNote("minornote3","minor",7,"V");
 //diminished chord
-storeChordType("diminished",3);
+var dimcolor = "#FF6138"
+storeChordType("diminished",3,dimcolor);
 storeNote("diminishednote1","diminished",0,"I");
 storeNote("diminishednote2","diminished",3,"IIIb");
 storeNote("diminishednote3","diminished",6,"Vb");
