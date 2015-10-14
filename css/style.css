@@ -1,10 +1,40 @@
 body {
 	font-family: "Verdana", Sans, serif;
 	font-size:15px;
+
 }
 
 .clear {
 	clear:both;
+}
+
+#scalePiano {
+	border-style:solid;
+	border-width:1px;
+	margin-bottom:10px;
+}
+
+#scaleInspector {
+	overflow:auto;
+	margin-bottom:10px;
+	border-style:solid;
+	border-width:1px;
+}
+
+.scale-block {
+	width:14.17%;
+	float:left;
+	text-align:center;
+	border-right-style:solid;
+	border-right-width:1px;
+}
+
+#o7scale {
+	border-right-style:none;
+}
+
+.scale-root {
+	padding:5px;
 }
 
 #container {
@@ -28,24 +58,34 @@ body {
 	display:none;
 }
 
-.output-title {
+#output-title {
 	padding-bottom:10px;
 	padding-top:10px;
 	font-weight:bold;
 }
 
-.output-block {
-	float:left;
-	width:14%;
-	text-align:center;
-
+#keyInspector {
 	border-style:solid;
 	border-width:1px;
+	overflow:auto;
+}
+
+.key-block {
+	float:left;
+	width:14.17%;
+	text-align:center;
+	border-right-style:solid;
+	border-right-width:1px;
+}
+
+#o7 {
+	border-right-style:none;
 }
 
 .roman {
-	padding:6px;
+	text-align:center;
 	font-weight:bold;
+	padding:5px;
 	border-bottom-style:solid;
 	border-bottom-width:1px;
 }
@@ -54,18 +94,16 @@ body {
 	padding:8px;
 	border-bottom-style:solid;
 	border-bottom-width:1px;
-	margin-bottom:10px;
 }
 
 .chord-type {
+	padding:8px;
 	border-bottom-style:solid;
 	border-bottom-width:1px;
-	padding:8px;
-	padding-bottom:16px;
 }
 
 .notes-block {
-	padding:5px;
+	padding:8px;
 	padding-bottom:70px;
 }
 
