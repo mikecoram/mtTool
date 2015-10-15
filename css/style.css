@@ -9,9 +9,9 @@ body {
 }
 
 #scalePiano {
-	border-style:solid;
-	border-width:1px;
+	margin:auto;
 	margin-bottom:10px;
+	text-align:center;
 }
 
 #scaleInspector {

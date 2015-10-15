@@ -2,6 +2,26 @@
 populateDropBox("inputRoot",note);
 populateDropBox("inputType",keyTypes);
 
+//draw piano
+var canvas = document.getElementById("scalePiano");
+var context = canvas.getContext('2d');
+
+var imageObj = new Image();
+imageObj.src = "img/piano.png"
+
+var circleRadius = 7;
+var midC = 270;
+
+var yoffset = 120;
+var xoffset = 36;
+
+var bxoffset = 26;
+var byoffset = -50;
+
+imageObj.onload = function() {
+        context.drawImage(imageObj, 0, 0);
+};
+
 function populateDropBox(elementName,dArray) {
 	var dropBox = document.getElementById(elementName);
 	for (var i = 0; i < dArray.length; i++) {
@@ -10,6 +30,18 @@ function populateDropBox(elementName,dArray) {
 		option.value = dArray[i];
 		dropBox.add(option);
 	}
+}
+
+function drawCircle(pos,xmod,ymod,color) {
+	context.beginPath();
+	context.arc(midC+xmod+((xoffset*pos)),yoffset+ymod, circleRadius, 0,
+				 2 * Math.PI,false);
+	context.fillStyle = color;
+	context.fill();
+	context.lineWidth = 5;
+	context.strokeStyle = "#000000";
+	context.lineWidth = 2;
+	context.stroke();
 }
 
 function pressSubmit() {
@@ -31,6 +63,13 @@ function pressSubmit() {
 		=keyNotes[i];
 		document.getElementById("o"+(i+1)+"root").innerHTML
 		=keyNotes[i];
+
+		if (keyNotes[i].length > 1) {
+			drawCircle(i, bxoffset, byoffset, colorChord.typeColor);
+		}
+		else {
+			drawCircle(i, 0, 0, colorChord.typeColor);
+		}
 
 		//store relative chord at position from scale
 		var cStore = inputType.value + "chord" + (i+1);

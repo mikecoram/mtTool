@@ -1,0 +1,6 @@
+756 x 150 	total
+
+36 x 150 	white key
+22 x 94 	black key
+
+250 + 18	mid-c begins at
