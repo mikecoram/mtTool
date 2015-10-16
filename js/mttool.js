@@ -5,22 +5,17 @@ populateDropBox("inputType",keyTypes);
 //draw piano
 var canvas = document.getElementById("scalePiano");
 var context = canvas.getContext('2d');
-
 var imageObj = new Image();
 imageObj.src = "img/piano.png"
 
 var circleRadius = 7;
 var midC = 270;
-
+var base;
 var yoffset = 120;
 var xoffset = 36;
-
-var bxoffset = 26;
+var bxoffset = 18;
+var smallbxoffset = 9;
 var byoffset = -50;
-
-imageObj.onload = function() {
-        context.drawImage(imageObj, 0, 0);
-};
 
 function populateDropBox(elementName,dArray) {
 	var dropBox = document.getElementById(elementName);
@@ -32,10 +27,51 @@ function populateDropBox(elementName,dArray) {
 	}
 }
 
-function drawCircle(pos,xmod,ymod,color) {
+function getKeyColor() {
+	var colorChord = JSON.parse(localStorage.getItem(inputType.value));
+	return colorChord.typeColor;
+}
+function colorElement(element, color) {
+	document.getElementById(element).style.backgroundColor =
+	color;
+}
+function setElementContent(element, content, mode) {
+	if (mode == 0) { //overwrite
+		document.getElementById(element).innerHTML = content;
+	}
+	else { //append
+		document.getElementById(element).innerHTML += content;
+	}
+}
+
+function getBasePos(keyNote) {
+	var pos = -99;
+	switch (keyNote.charAt(0)) {
+		case 'G': pos = -3; break;
+		case 'A': pos = -2; break;
+		case 'B': pos = -1; break;
+		case 'C': pos = 0; break;
+		case 'D': pos = 1; break;
+		case 'E': pos = 2; break;
+		case 'F': pos = 3; break;
+		default: pos = -9; break;
+	}
+
+	return pos;
+}
+function drawNotes(keyNote, pos, base) {
+	if (keyNote.length > 1) { //black note
+			drawCircle(base+(xoffset*pos)+bxoffset, yoffset+byoffset, circleRadius,
+			getKeyColor());
+		}
+	else {
+			drawCircle(base+(xoffset*pos), yoffset, circleRadius,
+			getKeyColor());
+	}
+}
+function drawCircle(x, y, radius, color) {
 	context.beginPath();
-	context.arc(midC+xmod+((xoffset*pos)),yoffset+ymod, circleRadius, 0,
-				 2 * Math.PI,false);
+	context.arc(x, y, radius, 0, 2 * Math.PI,false);
 	context.fillStyle = color;
 	context.fill();
 	context.lineWidth = 5;
@@ -43,45 +79,41 @@ function drawCircle(pos,xmod,ymod,color) {
 	context.lineWidth = 2;
 	context.stroke();
 }
+function refreshCanvas() {
+	context.clearRect(0, 0, canvas.width, canvas.height);
+	context.drawImage(imageObj, 0, 0);
+}
 
 function pressSubmit() {
+	refreshCanvas();
+
 	var scaleNotes = shuffleNotes(inputRoot.value);
 	var keyNotes = getScale(inputRoot.value,inputType.value);
+
+	colorElement("scaleInspector",getKeyColor());
+
+	document.getElementById("output-title").innerHTML = inputRoot.value + " " +
+	inputType.value;
 
 	//display output div
 	document.getElementById("output").style.display="inline";
 
-	var colorChord = JSON.parse(localStorage.getItem(inputType.value));
-	document.getElementById("scaleInspector").style.backgroundColor =
-	colorChord.typeColor;
-	document.getElementById("output-title").innerHTML = inputRoot.value + " " +
-	inputType.value;
-
 	for(var i = 0; i < keyNotes.length; i++) {
 		//display root notes
-		document.getElementById("o"+(i+1)+"chordroot").innerHTML
-		=keyNotes[i];
-		document.getElementById("o"+(i+1)+"root").innerHTML
-		=keyNotes[i];
+		setElementContent("o"+(i+1)+"chordroot",keyNotes[i],0);
+		setElementContent("o"+(i+1)+"root",keyNotes[i],0);
 
-		if (keyNotes[i].length > 1) {
-			drawCircle(i, bxoffset, byoffset, colorChord.typeColor);
-		}
-		else {
-			drawCircle(i, 0, 0, colorChord.typeColor);
-		}
+		var base = midC + (getBasePos(keyNotes[0]) * xoffset);
+		drawNotes(keyNotes[i],i,base);
 
-		//store relative chord at position from scale
+		//chords
 		var cStore = inputType.value + "chord" + (i+1);
 		var retChord = JSON.parse(localStorage.getItem(cStore));
-		//display chord types
-		document.getElementById("o"+(i+1)+"chordtype").innerHTML=
-		retChord.chordType;
-		//store chord type information
+		setElementContent("o"+(i+1)+"chordtype",retChord.chordType,0)
+		
 		var retType = JSON.parse(localStorage.getItem(retChord.chordType));
+		colorElement("o"+(i+1),retType.typeColor);
 
-		document.getElementById("o"+(i+1)).style.backgroundColor = 
-		retType.typeColor;
 
 		//reset chord breakdown output
 		document.getElementById("o"+(i+1)+"note").innerHTML="";
@@ -124,23 +156,27 @@ function getScale(keyRoot,keyType) {
 		if (i == break1 || i == break2) { j += 1; }
 		else { j += 2; }
 	}
+
 	return scale;
 }
 
 function shuffleNotes(keyRoot) {
 	var shuffle = new Array(note.length);
 	var startNote = 0;
+
 	for (var i = 0; i < note.length; i++) {
 		if(note[i] == keyRoot) {
 			startNote = i;
 			break;
 		}
 	}
+
 	var j = startNote;
 	for (var i = 0; i < note.length; i++) {
 		if (j > 11) { j = 0;}
 		shuffle[i] = note[j];
 		j++;
 	}
+
 	return shuffle;
 }

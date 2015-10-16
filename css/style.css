@@ -4,6 +4,17 @@ body {
 
 }
 
+#title {
+	float:left;
+	width:30%;
+}
+
+#input {
+	width:70%;
+	float:left;
+	text-align:right;
+}
+
 .clear {
 	clear:both;
 }
@@ -41,17 +52,6 @@ body {
 	margin-left:auto;
 	margin-right:auto;
 	width:750px;
-}
-
-#title {
-	float:left;
-	width:30%;
-}
-
-#input {
-	width:70%;
-	float:left;
-	text-align:right;
 }
 
 #output {
