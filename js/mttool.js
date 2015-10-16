@@ -1,21 +1,18 @@
 //populate note and key type drop down boxs
 populateDropBox("inputRoot",note);
 populateDropBox("inputType",keyTypes);
-
-//draw piano
-var canvas = document.getElementById("scalePiano");
-var context = canvas.getContext('2d');
+const canvas = document.getElementById("scalePiano");
+const context = canvas.getContext('2d');
 var imageObj = new Image();
 imageObj.src = "img/piano.png"
 
-var circleRadius = 7;
-var midC = 270;
-var base;
-var yoffset = 120;
-var xoffset = 36;
-var bxoffset = 18;
-var smallbxoffset = 9;
-var byoffset = -50;
+const circleRadius = 7;
+const midC = 270;
+const yoffset = 120;
+const xoffset = 36;
+
+const bxoffset = 18;
+const byoffset = 70;
 
 function populateDropBox(elementName,dArray) {
 	var dropBox = document.getElementById(elementName);
@@ -28,13 +25,15 @@ function populateDropBox(elementName,dArray) {
 }
 
 function getKeyColor() {
-	var colorChord = JSON.parse(localStorage.getItem(inputType.value));
+	var colorChord = getObject(inputType.value);
 	return colorChord.typeColor;
 }
-function colorElement(element, color) {
+
+function setElementColor(element, color) {
 	document.getElementById(element).style.backgroundColor =
 	color;
 }
+
 function setElementContent(element, content, mode) {
 	if (mode == 0) { //overwrite
 		document.getElementById(element).innerHTML = content;
@@ -44,8 +43,12 @@ function setElementContent(element, content, mode) {
 	}
 }
 
+function getObject(objectName) {
+	return JSON.parse(localStorage.getItem(objectName));
+}
+
 function getBasePos(keyNote) {
-	var pos = -99;
+	var pos;
 	switch (keyNote.charAt(0)) {
 		case 'G': pos = -3; break;
 		case 'A': pos = -2; break;
@@ -54,21 +57,86 @@ function getBasePos(keyNote) {
 		case 'D': pos = 1; break;
 		case 'E': pos = 2; break;
 		case 'F': pos = 3; break;
-		default: pos = -9; break;
 	}
-
 	return pos;
 }
-function drawNotes(keyNote, pos, base) {
-	if (keyNote.length > 1) { //black note
-			drawCircle(base+(xoffset*pos)+bxoffset, yoffset+byoffset, circleRadius,
-			getKeyColor());
-		}
+
+function getBasex(root) {
+	if (root.length > 1) {
+		return bxoffset;
+	}
 	else {
-			drawCircle(base+(xoffset*pos), yoffset, circleRadius,
-			getKeyColor());
+		return 0;
 	}
 }
+
+function getSemiGap(dia,note) {
+	var gap = 0;
+
+	for (var i = 0; i < dia.length; i++) {
+		if(note == dia[i]) {
+			gap = i;
+			break;
+		}
+	}
+
+	return gap;
+}
+
+function getxDist(dia, gap) {
+	var dist = 0;
+	for(var i = 0; i < dia.length, i < gap;i++) {
+		if (dia[i] == "B" || dia[i] == "E") {
+			dist += xoffset;
+		}
+		else {
+			dist += bxoffset;
+		}
+	}
+
+	return dist;
+}
+
+function getyDist(note) {
+	if (note.length > 1) {
+		return byoffset;
+	}
+	else {
+		return yoffset;
+	}
+}
+
+function removeAccidentals(scale) {
+	var newScale = new Array(7);
+	var j = 0;
+
+	for (var i = 0; i < scale.length; i++) {
+		if (scale[i].length == 1) {
+			newScale[j++] = scale[i];
+		}
+		else {
+			newScale[j++] = scale[i].charAt(0);
+		}
+	}
+
+	return newScale;
+}
+
+function getBxOffset(note) {
+	switch (note) {
+		case 'd':break;
+	}
+}
+
+function drawNote(keyNote, x, y, base) {
+	if (keyNote.length > 1) { //black note
+			drawCircle(base+x, y, circleRadius, getKeyColor());
+		}
+	else {
+			drawCircle(base+x, y, circleRadius, getKeyColor());
+	}
+}
+
 function drawCircle(x, y, radius, color) {
 	context.beginPath();
 	context.arc(x, y, radius, 0, 2 * Math.PI,false);
@@ -79,53 +147,55 @@ function drawCircle(x, y, radius, color) {
 	context.lineWidth = 2;
 	context.stroke();
 }
-function refreshCanvas() {
+
+function resetCanvas() {
 	context.clearRect(0, 0, canvas.width, canvas.height);
 	context.drawImage(imageObj, 0, 0);
 }
 
-function pressSubmit() {
-	refreshCanvas();
+function resetChordInspector() {
+	for (var i = 1; i <= 7; i++) {
+		setElementContent("o"+(i)+"note", "", 0);
+		setElementContent("o"+(i)+"notedivi", "", 0);
+	}
+}
 
-	var scaleNotes = shuffleNotes(inputRoot.value);
+function pressSubmit() {
+	var diaNotes = shuffleNotes(inputRoot.value);
 	var keyNotes = getScale(inputRoot.value,inputType.value);
 
-	colorElement("scaleInspector",getKeyColor());
+	resetCanvas();
+	resetChordInspector();
 
-	document.getElementById("output-title").innerHTML = inputRoot.value + " " +
-	inputType.value;
+	setElementColor("scaleInspector",getKeyColor());
+	setElementContent("output-title",inputRoot.value + " " + inputType.value,0);
 
-	//display output div
 	document.getElementById("output").style.display="inline";
 
 	for(var i = 0; i < keyNotes.length; i++) {
-		//roots
 		setElementContent("o"+(i+1)+"chordroot",keyNotes[i],0);
 		setElementContent("o"+(i+1)+"root",keyNotes[i],0);
-		var base = midC + (getBasePos(keyNotes[0]) * xoffset);
-		drawNotes(keyNotes[i],i,base);
 
-		//chords
-		var cStore = inputType.value + "chord" + (i+1);
-		var retChord = JSON.parse(localStorage.getItem(cStore));
-		setElementContent("o"+(i+1)+"chordtype",retChord.chordType,0)
-		//type
+		var xdist = getxDist(diaNotes, getSemiGap(diaNotes,keyNotes[i]));
+		var ydist = getyDist(keyNotes[i]);
+		console.log(getSemiGap(diaNotes,keyNotes[i]));
+		console.log(xdist);
+
+		drawNote(keyNotes[i],xdist,ydist, 
+			midC + getBasex(keyNotes[0]) + (getBasePos(keyNotes[0]) * xoffset));
+
+		var retChord = JSON.parse(localStorage.getItem(inputType.value 
+						+ "chord" + (i+1)));
 		var retType = JSON.parse(localStorage.getItem(retChord.chordType));
-		colorElement("o"+(i+1),retType.typeColor);
+		setElementContent("o"+(i+1)+"chordtype",retChord.chordType,0)
+		setElementColor("o"+(i+1),retType.typeColor);
 
-		//reset chord breakdown output
-		document.getElementById("o"+(i+1)+"note").innerHTML="";
-		document.getElementById("o"+(i+1)+"notedivi").innerHTML="";
-		//chord notes
 		for(var j = 1; j <= retType.noteAmount; j++) {
-			var nStore = retChord.chordType + "note" + j;
-			var retNote = JSON.parse(localStorage.getItem(nStore));
-			var outputNote=getNote(keyNotes[i],retNote.gapFromRoot);
-			
-			document.getElementById("o"+(i+1)+"notedivi").innerHTML+=
-			retNote.division+"<br>";
-			document.getElementById("o"+(i+1)+"note").innerHTML+=
-			outputNote+"<br>";
+			var retNote = JSON.parse(localStorage.getItem(
+				retChord.chordType + "note" + j));
+			setElementContent("o"+(i+1)+"notedivi", retNote.division+"<br>", 1);
+			setElementContent("o"+(i+1)+"note", getNote(
+				keyNotes[i],retNote.gapFromRoot)+"<br>", 1);
 		}
 
 	}
@@ -172,8 +242,7 @@ function shuffleNotes(keyRoot) {
 	var j = startNote;
 	for (var i = 0; i < note.length; i++) {
 		if (j > 11) { j = 0;}
-		shuffle[i] = note[j];
-		j++;
+		shuffle[i] = note[j++];
 	}
 
 	return shuffle;
