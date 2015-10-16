@@ -3,6 +3,8 @@ populateDropBox("inputRoot",note);
 populateDropBox("inputType",keyTypes);
 const canvas = document.getElementById("scalePiano");
 const context = canvas.getContext('2d');
+const chordCanvas = document.getElementById("chordPiano");
+const chordContext = chordCanvas.getContext('2d');
 var imageObj = new Image();
 imageObj.src = "img/piano.png"
 
@@ -61,7 +63,7 @@ function getBasePos(keyNote) {
 	return pos;
 }
 
-function getBasex(root) {
+function getBaseMod(root) {
 	if (root.length > 1) {
 		return bxoffset;
 	}
@@ -151,6 +153,8 @@ function drawCircle(x, y, radius, color) {
 function resetCanvas() {
 	context.clearRect(0, 0, canvas.width, canvas.height);
 	context.drawImage(imageObj, 0, 0);
+	chordContext.clearRect(0, 0, chordCanvas.width, chordCanvas.height);
+	chordContext.drawImage(imageObj, 0, 0);
 }
 
 function resetChordInspector() {
@@ -167,22 +171,18 @@ function pressSubmit() {
 	resetCanvas();
 	resetChordInspector();
 
-	setElementColor("scaleInspector",getKeyColor());
 	setElementContent("output-title",inputRoot.value + " " + inputType.value,0);
 
 	document.getElementById("output").style.display="inline";
 
 	for(var i = 0; i < keyNotes.length; i++) {
 		setElementContent("o"+(i+1)+"chordroot",keyNotes[i],0);
-		setElementContent("o"+(i+1)+"root",keyNotes[i],0);
 
 		var xdist = getxDist(diaNotes, getSemiGap(diaNotes,keyNotes[i]));
 		var ydist = getyDist(keyNotes[i]);
-		console.log(getSemiGap(diaNotes,keyNotes[i]));
-		console.log(xdist);
 
 		drawNote(keyNotes[i],xdist,ydist, 
-			midC + getBasex(keyNotes[0]) + (getBasePos(keyNotes[0]) * xoffset));
+			midC + getBaseMod(keyNotes[0]) + (getBasePos(keyNotes[0]) * xoffset));
 
 		var retChord = JSON.parse(localStorage.getItem(inputType.value 
 						+ "chord" + (i+1)));
