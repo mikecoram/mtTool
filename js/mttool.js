@@ -99,10 +99,9 @@ function pressSubmit() {
 	document.getElementById("output").style.display="inline";
 
 	for(var i = 0; i < keyNotes.length; i++) {
-		//display root notes
+		//roots
 		setElementContent("o"+(i+1)+"chordroot",keyNotes[i],0);
 		setElementContent("o"+(i+1)+"root",keyNotes[i],0);
-
 		var base = midC + (getBasePos(keyNotes[0]) * xoffset);
 		drawNotes(keyNotes[i],i,base);
 
@@ -110,15 +109,14 @@ function pressSubmit() {
 		var cStore = inputType.value + "chord" + (i+1);
 		var retChord = JSON.parse(localStorage.getItem(cStore));
 		setElementContent("o"+(i+1)+"chordtype",retChord.chordType,0)
-		
+		//type
 		var retType = JSON.parse(localStorage.getItem(retChord.chordType));
 		colorElement("o"+(i+1),retType.typeColor);
-
 
 		//reset chord breakdown output
 		document.getElementById("o"+(i+1)+"note").innerHTML="";
 		document.getElementById("o"+(i+1)+"notedivi").innerHTML="";
-		//display chord breakdown
+		//chord notes
 		for(var j = 1; j <= retType.noteAmount; j++) {
 			var nStore = retChord.chordType + "note" + j;
 			var retNote = JSON.parse(localStorage.getItem(nStore));
