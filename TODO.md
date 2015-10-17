@@ -1,6 +1,10 @@
-Clean code
-Add show notes across whole piano option
+TODO:
 Allow chords to be changed for variations (7ths etc.)
-Implement circle of fifths GUI
+
+POTENTIAL:
+Add option for multi colored scale output
+Add labels or on hover pop-ups to notes on piano
+Centralise note output
+Add show notes across whole piano option
 Add additional scale types
-Rethink design
+Implement circle of fifths GUI
