@@ -1,8 +1,5 @@
 Clean code
-Add each note as individual div
-Add chord inspector
-    Add show chord button
-Add piano chord representation
+Add show notes across whole piano option
 Allow chords to be changed for variations (7ths etc.)
 Implement circle of fifths GUI
 Add additional scale types

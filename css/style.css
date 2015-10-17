@@ -15,37 +15,14 @@ body {
 	text-align:right;
 }
 
-.clear {
-	clear:both;
-}
-
 #scalePiano {
 	margin:auto;
 	margin-bottom:10px;
 	text-align:center;
 }
 
-#scaleInspector {
-	overflow:auto;
-	margin-bottom:10px;
-	border-style:solid;
-	border-width:1px;
-}
-
-.scale-block {
-	width:14.17%;
-	float:left;
-	text-align:center;
-	border-right-style:solid;
-	border-right-width:1px;
-}
-
 #o7scale {
 	border-right-style:none;
-}
-
-.scale-root {
-	padding:5px;
 }
 
 #container {
@@ -121,4 +98,8 @@ body {
 	float:left;
 	font-size:13px;
 	line-height:20px;
+}
+
+.show {
+	margin:5px;
 }
