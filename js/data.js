@@ -1,10 +1,9 @@
 //Data structures
-//Notes, chords & keys
+//Notes, chords & key selectors
 var note = ['A', 'A#/Bb', 'B', 'C', 'C#/Db', 'D', 'D#/Eb', 
 				'E', 'F', 'F#/Gb', 'G', 'G#/Ab'];
 var keyTypes = ['major', 'minor'];
 var chordTypes = ['major', 'minor', 'diminished', 'augmented'];
-
 //Relative chord and note details
 function relChord(inputChordType, inputKeyName, inputDegree) {
 	this.chordType = inputChordType;
@@ -34,7 +33,7 @@ function storeChordType(name,amount,color) {
 	var sType = new chordType(name,amount,color);
 	localStorage.setItem(name, JSON.stringify(sType));
 }
-
+//chord storage
 //major chord
 var majcolor = '#FFFF9D'
 storeChordType('major',3,majcolor);
@@ -47,19 +46,19 @@ storeChordType('minor',3,mincolor);
 storeNote('minornote1','minor',0,'I');
 storeNote('minornote2','minor',3,'IIIb');
 storeNote('minornote3','minor',7,'V');
+//augmented chord
+var augcolor = 'red';
+storeChordType('augmented',3,augcolor);
+storeNote('augmentednote1','augmented',0,'I');
+storeNote('augmentednote2','augmented',4,'III#');
+storeNote('augmentednote3','augmented',8,'V#');
 //diminished chord
 var dimcolor = '#FF6138'
 storeChordType('diminished',3,dimcolor);
 storeNote('diminishednote1','diminished',0,'I');
 storeNote('diminishednote2','diminished',3,'IIIb');
 storeNote('diminishednote3','diminished',6,'Vb');
-//augmented chord
-var augcolor = 'red';
-storeChordType('augmented',3,augcolor);
-storeNote('augmentednote1','augmented',0,'I');
-storeNote('augmentednote2','augmented',4,'III#');
-storeNote('augmentednote3','augmented',4,'V#');
-
+//key storage
 //major key
 storeChord('majorchord1','major','major',1);
 storeChord('majorchord2','minor','major',1);

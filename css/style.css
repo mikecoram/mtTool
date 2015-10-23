@@ -70,11 +70,11 @@ body {
 }
 
 .chord-type {
-	border-bottom-style:solid;
-	border-bottom-width:1px;
+	margin:4px;
 }
 
 .notes-block {
+	border-top: solid 1px black;
 	padding:8px;
 	padding-bottom:70px;
 }

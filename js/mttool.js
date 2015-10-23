@@ -41,8 +41,8 @@ function resetChordInspector() {
 	removeElementsByClass('note-divi');
 }
 
-function displayOutput() {
-	document.getElementById('output').style.display='inline';
+function displayElement(element) {
+	document.getElementById(element).style.display='inline';
 }
 
 function getKeyColor() {
@@ -160,7 +160,7 @@ function pressSubmit() {
 	resetCanvas(scaleContext);
 	resetCanvas(chordContext);
 	resetChordInspector();
-	displayOutput();
+	displayElement('output');
 	setElementContent('chord-title','Show a chord...',0);
 
 	for(var i = 0; i < keyNotes.length; i++) {
@@ -193,7 +193,7 @@ function showChord(n) {
 
 	resetCanvas(chordContext);
 	for (var i = 0; i < retType.noteAmount; i++) {
-		var retNote = getObject(retChord.chordType + 'note' + (i+1));
+		var retNote = getObject(retType.chordType + 'note' + (i+1));
 		var note = diaNotes[retNote.gapFromRoot];
 		var xdist = getxDist(diaNotes, getSemiGap(diaNotes, note));
 		var ydist = getyDist(note);
@@ -201,6 +201,7 @@ function showChord(n) {
 		drawNote(note,xdist,ydist, midC + (chordBase * xoffset) + 
 			getxMod(keyNotes[n-1]), chordContext, retType.typeColor);
 	}
+
 }
 
 function changeType(n) {

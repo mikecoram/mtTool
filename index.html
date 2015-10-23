@@ -8,27 +8,21 @@
 
 <body>
 <div id="container">
-<div id="console"></div>
 
 <div id="top">
 	<form id="input" onsubmit="return false">
 	Key:
-		<select id="inputRoot"></select>
-		<select id="inputType"></select>
-		<button id="inputSubmit" 
-			onclick="pressSubmit()"> submit
-		</button>
+		<select id="inputRoot" onchange="pressSubmit()"></select>
+		<select id="inputType" onchange="pressSubmit()"></select>
 	</form>
 
 	<div id="title">mtTool</div>
 </div>
 
 <div id = "output">
-
 	<canvas id="scalePiano" width="765" height="150"></canvas>
-
 	<div id="keyInspector">
-		<div id="o1" class="key-block">
+		<div id="o1" class="key-block" onmouseover="showChord(1)">
 			<div class="roman">I</div>
 			<div id="o1chordroot" class="chord-root"></div>
 			<select id ="o1chordtype" class="chord-type" onchange = "changeType(1)"></select>
@@ -36,11 +30,8 @@
 			<div id="o1notes" class="notes-block">
 				<div id="o1notedivi" class = "note-divi"></div>
 			</div>
-			<div id = "o1showchord">
-				<button id="o1show" class="show" onclick="showChord(1)">show</button>
-			</div>
 		</div>
-		<div id="o2" class="key-block">
+		<div id="o2" class="key-block" onmouseover="showChord(2)">
 			<div class="roman">II</div>
 			<div id="o2chordroot" class="chord-root"></div>
 			<select id ="o2chordtype" class="chord-type" onchange = "changeType(2)"></select>
@@ -48,11 +39,8 @@
 			<div id="o2notes" class="notes-block">
 				<div id="o2notedivi" class = "note-divi"></div>
 			</div>
-			<div id = "o2showchord">
-				<button id="o2show" class="show" onclick="showChord(2)">show</button>
-			</div>
 		</div>
-		<div id="o3" class="key-block">
+		<div id="o3" class="key-block" onmouseover="showChord(3)">
 			<div class="roman">III</div>
 			<div id="o3chordroot" class="chord-root"></div>
 			<select id ="o3chordtype" class="chord-type" onchange = "changeType(3)"></select>
@@ -60,11 +48,8 @@
 			<div id="o3notes" class="notes-block">
 				<div id="o3notedivi" class = "note-divi"></div>
 			</div>
-			<div id = "o3showchord">
-				<button id="o3show" class="show" onclick="showChord(3)">show</button>
-			</div>
 		</div>
-		<div id="o4" class="key-block">
+		<div id="o4" class="key-block" onmouseover="showChord(4)">
 			<div class="roman">IV</div>
 			<div id="o4chordroot" class="chord-root"></div>
 			<select id ="o4chordtype" class="chord-type" onchange = "changeType(4)"></select>
@@ -72,11 +57,8 @@
 			<div id="o4notes" class="notes-block">
 				<div id="o4notedivi" class = "note-divi"></div>
 			</div>
-			<div id = "o4showchord">
-				<button id="o4show" class="show" onclick="showChord(4)">show</button>
-			</div>
 		</div>
-		<div id="o5" class="key-block">
+		<div id="o5" class="key-block" onmouseover="showChord(5)">
 			<div class="roman">V</div>
 			<div id="o5chordroot" class="chord-root"></div>
 			<select id ="o5chordtype" class="chord-type" onchange = "changeType(5)"></select>
@@ -84,11 +66,8 @@
 			<div id="o5notes" class="notes-block">
 				<div id="o5notedivi" class = "note-divi"></div>
 			</div>
-			<div id = "o5showchord">
-				<button id="o5show" class="show" onclick="showChord(5)">show</button>
-			</div>
 		</div>
-		<div id="o6" class="key-block">
+		<div id="o6" class="key-block" onmouseover="showChord(6)">
 			<div class="roman">VI</div>
 			<div id="o6chordroot" class="chord-root"></div>
 			<select id ="o6chordtype" class="chord-type" onchange = "changeType(6)"></select>
@@ -96,20 +75,14 @@
 			<div id="o6notes" class="notes-block">
 				<div id="o6notedivi" class = "note-divi"></div>
 			</div>
-			<div id = "o6showchord">
-				<button id="o6show" class="show" onclick="showChord(6)">show</button>
-			</div>
 		</div>
-		<div id="o7" class="key-block">
+		<div id="o7" class="key-block" onmouseover="showChord(7)">
 			<div class="roman">VII</div>
 			<div id="o7chordroot" class="chord-root"></div>
 			<select id ="o7chordtype" class="chord-type" onchange = "changeType(7)"></select>
 
 			<div id="o7notes" class="notes-block">
 				<div id="o7notedivi" class = "note-divi"></div>
-			</div>
-			<div id = "o7showchord">
-				<button id="o7show" class="show" onclick="showChord(7)">show</button>
 			</div>
 		</div>
 	</div>
@@ -118,7 +91,7 @@
 	<canvas id="chordPiano" width="765" height="150"></canvas>
 </div>
 
-</div> <!--container-->
+</div>
 </body>
 </html>
 
