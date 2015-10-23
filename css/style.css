@@ -24,10 +24,6 @@ body {
 	float:left;
 }
 
-#output {
-	display:none;
-}
-
 #scalePiano {
 	margin:auto;
 	margin-bottom:0.4em;
@@ -92,6 +88,10 @@ body {
 	float:left;
 	font-size:13px;
 	line-height:20px;
+}
+
+.chord-reset {
+	margin-bottom:5px;
 }
 
 .show {

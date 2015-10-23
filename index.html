@@ -6,7 +6,7 @@
 	<meta charset="UTF-8">
 </head>
 
-<body>
+<body onload="pressSubmit()">
 <div id="container">
 
 <div id="top">
@@ -14,6 +14,7 @@
 	Key:
 		<select id="inputRoot" onchange="pressSubmit()"></select>
 		<select id="inputType" onchange="pressSubmit()"></select>
+		<button id="reset" onclick="pressSubmit()">reset</button>
 	</form>
 
 	<div id="title">mtTool</div>
@@ -30,6 +31,7 @@
 			<div id="o1notes" class="notes-block">
 				<div id="o1notedivi" class = "note-divi"></div>
 			</div>
+			<button id="o1reset" class="chord-reset" onclick="resetType(1)">reset</button>
 		</div>
 		<div id="o2" class="key-block" onmouseover="showChord(2)">
 			<div class="roman">II</div>
@@ -39,6 +41,7 @@
 			<div id="o2notes" class="notes-block">
 				<div id="o2notedivi" class = "note-divi"></div>
 			</div>
+			<button id="o2reset" class="chord-reset" onclick="resetType(2)">reset</button>
 		</div>
 		<div id="o3" class="key-block" onmouseover="showChord(3)">
 			<div class="roman">III</div>
@@ -48,6 +51,7 @@
 			<div id="o3notes" class="notes-block">
 				<div id="o3notedivi" class = "note-divi"></div>
 			</div>
+			<button id="o3reset" class="chord-reset" onclick="resetType(3)">reset</button>
 		</div>
 		<div id="o4" class="key-block" onmouseover="showChord(4)">
 			<div class="roman">IV</div>
@@ -57,6 +61,7 @@
 			<div id="o4notes" class="notes-block">
 				<div id="o4notedivi" class = "note-divi"></div>
 			</div>
+			<button id="o4reset" class="chord-reset" onclick="resetType(4)">reset</button>
 		</div>
 		<div id="o5" class="key-block" onmouseover="showChord(5)">
 			<div class="roman">V</div>
@@ -66,6 +71,7 @@
 			<div id="o5notes" class="notes-block">
 				<div id="o5notedivi" class = "note-divi"></div>
 			</div>
+			<button id="o5reset" class="chord-reset" onclick="resetType(5)">reset</button>
 		</div>
 		<div id="o6" class="key-block" onmouseover="showChord(6)">
 			<div class="roman">VI</div>
@@ -75,6 +81,7 @@
 			<div id="o6notes" class="notes-block">
 				<div id="o6notedivi" class = "note-divi"></div>
 			</div>
+			<button id="o6reset" class="chord-reset" onclick="resetType(6)">reset</button>
 		</div>
 		<div id="o7" class="key-block" onmouseover="showChord(7)">
 			<div class="roman">VII</div>
@@ -84,6 +91,7 @@
 			<div id="o7notes" class="notes-block">
 				<div id="o7notedivi" class = "note-divi"></div>
 			</div>
+			<button id="o7reset" class="chord-reset" onclick="resetType(7)">reset</button>
 		</div>
 	</div>
 

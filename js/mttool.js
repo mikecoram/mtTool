@@ -13,6 +13,7 @@ const byoffset = 70;
 
 populateDropBox('inputRoot',note);
 populateDropBox('inputType',keyTypes);
+document.getElementById('inputRoot').selectedIndex = 3;
 populateChordTypes();
 
 function populateDropBox(elementName,dArray) {
@@ -41,8 +42,11 @@ function resetChordInspector() {
 	removeElementsByClass('note-divi');
 }
 
-function displayElement(element) {
-	document.getElementById(element).style.display='inline';
+function removeElementsByClass(className){
+    var elements = document.getElementsByClassName(className);
+    while(elements.length > 0){
+        elements[0].parentNode.removeChild(elements[0]);
+    }
 }
 
 function getKeyColor() {
@@ -66,13 +70,6 @@ function setElementContent(element, content, mode) {
 	else { //append
 		document.getElementById(element).innerHTML += content;
 	}
-}
-
-function removeElementsByClass(className){
-    var elements = document.getElementsByClassName(className);
-    while(elements.length > 0){
-        elements[0].parentNode.removeChild(elements[0]);
-    }
 }
 
 function getSemiGap(dia,note) {
@@ -160,8 +157,7 @@ function pressSubmit() {
 	resetCanvas(scaleContext);
 	resetCanvas(chordContext);
 	resetChordInspector();
-	displayElement('output');
-	setElementContent('chord-title','Show a chord...',0);
+	setElementContent('chord-title','Hover over a chord...',0);
 
 	for(var i = 0; i < keyNotes.length; i++) {
 		setElementContent('o'+(i+1)+'chordroot',keyNotes[i],0);
@@ -210,6 +206,13 @@ function changeType(n) {
 	var type = getObject(document.getElementById('o'+n+'chordtype').value);
 	setElementColor('o'+(n),type.typeColor);
 	printNotes(type,keyNotes[n-1] ,n-1);
+	showChord(n);
+}
+
+function resetType(n) {	
+	var retChord = getObject(inputType.value + 'chord' + (n));
+	setDefType(retChord.chordType,n-1);
+	changeType(n);
 }
 
 function setDefType(def, i) {
