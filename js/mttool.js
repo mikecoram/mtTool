@@ -1,9 +1,9 @@
-const scaleCanvas = document.getElementById("scalePiano");
+const scaleCanvas = document.getElementById('scalePiano');
 const scaleContext = scaleCanvas.getContext('2d');
-const chordCanvas = document.getElementById("chordPiano");
+const chordCanvas = document.getElementById('chordPiano');
 const chordContext = chordCanvas.getContext('2d');
 var imageObj = new Image();
-imageObj.src = "img/piano.png"
+imageObj.src = 'img/piano.png'
 const circleRadius = 7;
 const midC = 270;
 const yoffset = 120;
@@ -11,16 +11,23 @@ const xoffset = 36;
 const bxoffset = 18;
 const byoffset = 70;
 
-populateDropBox("inputRoot",note);
-populateDropBox("inputType",keyTypes);
+populateDropBox('inputRoot',note);
+populateDropBox('inputType',keyTypes);
+populateChordTypes();
 
 function populateDropBox(elementName,dArray) {
 	var dropBox = document.getElementById(elementName);
 	for (var i = 0; i < dArray.length; i++) {
-		var option = document.createElement("option");
+		var option = document.createElement('option');
 		option.text = dArray[i];
 		option.value = dArray[i];
 		dropBox.add(option);
+	}
+}
+
+function populateChordTypes () {
+	for (var i = 1; i <= 7; i++) {
+		populateDropBox('o'+(i)+'chordtype',chordTypes);
 	}
 }
 
@@ -30,12 +37,12 @@ function resetCanvas(context) {
 }
 
 function resetChordInspector() {
-	removeElementsByClass("note");
-	removeElementsByClass("note-divi");
+	removeElementsByClass('note');
+	removeElementsByClass('note-divi');
 }
 
 function displayOutput() {
-	document.getElementById("output").style.display="inline";
+	document.getElementById('output').style.display='inline';
 }
 
 function getKeyColor() {
@@ -93,7 +100,7 @@ function getxMod(root) {
 function getxDist(dia, gap) {
 	var dist = 0;
 	for(var i = 0; i < dia.length, i < gap;i++) {
-		if (dia[i] == "B" || dia[i] == "E") {
+		if (dia[i] == 'B' || dia[i] == 'E') {
 			dist += xoffset;
 		}
 		else {
@@ -142,7 +149,7 @@ function drawCircle(x, y, radius, color, context) {
 	context.fillStyle = color;
 	context.fill();
 	context.lineWidth = 5;
-	context.strokeStyle = "#000000";
+	context.strokeStyle = '#000000';
 	context.lineWidth = 2;
 	context.stroke();
 }
@@ -154,10 +161,10 @@ function pressSubmit() {
 	resetCanvas(chordContext);
 	resetChordInspector();
 	displayOutput();
-	setElementContent("chord-title","Show a chord...",0);
+	setElementContent('chord-title','Show a chord...',0);
 
 	for(var i = 0; i < keyNotes.length; i++) {
-		setElementContent("o"+(i+1)+"chordroot",keyNotes[i],0);
+		setElementContent('o'+(i+1)+'chordroot',keyNotes[i],0);
 
 		var xdist = getxDist(diaNotes, getSemiGap(diaNotes,keyNotes[i]));
 		var ydist = getyDist(keyNotes[i]);
@@ -165,10 +172,10 @@ function pressSubmit() {
 		drawNote(keyNotes[i],xdist,ydist, midC + getxMod(keyNotes[0]) + 
 			(getBasePos(keyNotes[0]) * xoffset), scaleContext, getKeyColor());
 
-		var retChord = getObject(inputType.value + "chord" + (i+1));
+		var retChord = getObject(inputType.value + 'chord' + (i+1));
 		var retType = getObject(retChord.chordType);
-		setElementContent("o"+(i+1)+"chordtype",retChord.chordType,0)
-		setElementColor("o"+(i+1),retType.typeColor);
+		setElementColor('o'+(i+1),retType.typeColor);
+		setDefType(retChord.chordType, i);
 
 		printNotes(retType,keyNotes[i] ,i);
 	}
@@ -177,16 +184,16 @@ function pressSubmit() {
 function showChord(n) {
 	var keyNotes = getScale(inputRoot.value,inputType.value);
 	var diaNotes = shuffleNotes(keyNotes[n-1]);
-	var retChord = getObject(inputType.value + "chord" + (n));
-	var retType = getObject(retChord.chordType);
+	var retChord = getObject(inputType.value + 'chord' + (n));
+	var retType = getObject(document.getElementById('o'+n+'chordtype').value);
 	var chordBase = getBasePos(keyNotes[n-1]);
 
-	setElementContent("chord-title",keyNotes[n-1] + " " + retType.chordType
-		+ " chord",0);
+	setElementContent('chord-title',keyNotes[n-1] + ' ' + retType.chordType
+		+ ' chord',0);
 
 	resetCanvas(chordContext);
 	for (var i = 0; i < retType.noteAmount; i++) {
-		var retNote = getObject(retChord.chordType + "note" + (i+1));
+		var retNote = getObject(retChord.chordType + 'note' + (i+1));
 		var note = diaNotes[retNote.gapFromRoot];
 		var xdist = getxDist(diaNotes, getSemiGap(diaNotes, note));
 		var ydist = getyDist(note);
@@ -196,20 +203,38 @@ function showChord(n) {
 	}
 }
 
+function changeType(n) {
+	document.getElementById('o'+n+'notes').innerHTML = '';
+	var keyNotes = getScale(inputRoot.value,inputType.value);
+	var type = getObject(document.getElementById('o'+n+'chordtype').value);
+	setElementColor('o'+(n),type.typeColor);
+	printNotes(type,keyNotes[n-1] ,n-1);
+}
+
+function setDefType(def, i) {
+	var select = document.getElementById('o'+(i+1)+'chordtype');
+	for (var j = 0; j < select.options.length; j++) {
+		if (def == select.options[j].innerHTML) {
+			select.selectedIndex = j;
+			break;
+		}
+	}
+}
+
 function printNotes(retType, note, i) {
-	var noteCont = document.getElementById("o"+ (i+1) +"notes");
+	var noteCont = document.getElementById('o'+ (i+1) +'notes');
 	for(var j = 1; j <= retType.noteAmount; j++) {
-		var retNote = getObject(retType.chordType + "note" + j);
+		var retNote = getObject(retType.chordType + 'note' + j);
 		var diviDiv = document.createElement('div');
-		diviDiv.className = "note-divi";
+		diviDiv.className = 'note-divi';
 		diviDiv.innerHTML = retNote.division;
 		noteCont.appendChild(diviDiv);
 
 		var noteDiv = document.createElement('div');
-		noteDiv.className = "note";
+		noteDiv.className = 'note';
 		noteDiv.innerHTML = getNote(note,retNote.gapFromRoot);
 		noteCont.appendChild(noteDiv);
-		}
+	}
 }
 
 function getNote(rootNote,gap) {
@@ -223,11 +248,11 @@ function getScale(keyRoot,keyType) {
 	var break1 = 0; 
 	var break2 = 0;
 
-	if(keyType == "major") {
+	if(keyType == 'major') {
 		break1 = 2;
 		break2 = 6;
 	}
-	else if (keyType == "minor") {
+	else if (keyType == 'minor') {
 		break1 = 1;
 		break2 = 4;
 	}
