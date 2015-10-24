@@ -131,6 +131,20 @@ function getScaleBase(keyNote) {
 	return pos;
 }
 
+function getChordBase(root) {
+	var pos;
+	switch(keyNote.charAt(0)) {
+		case 'C': pos = 0; break;
+		case 'D': pos = 1; break;
+		case 'E': pos = 2; break;
+		case 'F': pos = 3; break;
+		case 'G': pos = 4; break;
+		case 'A': pos = 5; break;
+		case 'B': pos = 6; break;
+	}
+	return pos;
+}
+
 function drawNote(keyNote, x, y, base, context, color) {
 	if (keyNote.length > 1) { //black note
 			drawCircle(base+x, y, circleRadius, color, context);
@@ -165,11 +179,17 @@ function pressSubmit() {
 		var xdist = getxDist(diaNotes, getSemiGap(diaNotes,keyNotes[i]));
 		var ydist = getyDist(keyNotes[i]);
 
-		drawNote(keyNotes[i],xdist,ydist, midC + getxMod(keyNotes[0]) + 
-			(getScaleBase(keyNotes[0]) * xoffset), scaleContext, getKeyColor());
-
 		var retChord = getObject(inputType.value + 'chord' + (i+1));
 		var retType = getObject(retChord.chordType);
+
+		var noteColor = getKeyColor();
+		if (document.getElementById('multiColor').checked) {
+			noteColor = retType.typeColor;
+		}
+
+		drawNote(keyNotes[i],xdist,ydist, midC + getxMod(keyNotes[0]) + 
+			(getScaleBase(keyNotes[0]) * xoffset), scaleContext, noteColor);
+
 		setElementColor('o'+(i+1),retType.typeColor);
 		setDefType(retChord.chordType, i);
 
