@@ -117,7 +117,7 @@ function getyDist(note) {
 	}
 }
 
-function getBasePos(keyNote) {
+function getScaleBase(keyNote) {
 	var pos;
 	switch (keyNote.charAt(0)) {
 		case 'G': pos = -3; break;
@@ -127,6 +127,20 @@ function getBasePos(keyNote) {
 		case 'D': pos = 1; break;
 		case 'E': pos = 2; break;
 		case 'F': pos = 3; break;
+	}
+	return pos;
+}
+
+function getChordBase(root) {
+	var pos;
+	switch(keyNote.charAt(0)) {
+		case 'C': pos = 0; break;
+		case 'D': pos = 1; break;
+		case 'E': pos = 2; break;
+		case 'F': pos = 3; break;
+		case 'G': pos = 4; break;
+		case 'A': pos = 5; break;
+		case 'B': pos = 6; break;
 	}
 	return pos;
 }
@@ -165,11 +179,17 @@ function pressSubmit() {
 		var xdist = getxDist(diaNotes, getSemiGap(diaNotes,keyNotes[i]));
 		var ydist = getyDist(keyNotes[i]);
 
-		drawNote(keyNotes[i],xdist,ydist, midC + getxMod(keyNotes[0]) + 
-			(getBasePos(keyNotes[0]) * xoffset), scaleContext, getKeyColor());
-
 		var retChord = getObject(inputType.value + 'chord' + (i+1));
 		var retType = getObject(retChord.chordType);
+
+		var noteColor = getKeyColor();
+		if (document.getElementById('multiColor').checked) {
+			noteColor = retType.typeColor;
+		}
+
+		drawNote(keyNotes[i],xdist,ydist, midC + getxMod(keyNotes[0]) + 
+			(getScaleBase(keyNotes[0]) * xoffset), scaleContext, noteColor);
+
 		setElementColor('o'+(i+1),retType.typeColor);
 		setDefType(retChord.chordType, i);
 
@@ -182,7 +202,7 @@ function showChord(n) {
 	var diaNotes = shuffleNotes(keyNotes[n-1]);
 	var retChord = getObject(inputType.value + 'chord' + (n));
 	var retType = getObject(document.getElementById('o'+n+'chordtype').value);
-	var chordBase = getBasePos(keyNotes[n-1]);
+	var chordBase = getScaleBase(keyNotes[n-1]);
 
 	setElementContent('chord-title',keyNotes[n-1] + ' ' + retType.chordType
 		+ ' chord',0);

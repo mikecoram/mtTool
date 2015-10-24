@@ -2,22 +2,24 @@
 <html>
 
 <head>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<meta charset="UTF-8">
 </head>
 
 <body onload="pressSubmit()">
-<div id="container">
+<div id="mt-container">
 
 <div id="top">
 	<form id="input" onsubmit="return false">
-	Key:
+	Key Selector:
 		<select id="inputRoot" onchange="pressSubmit()"></select>
 		<select id="inputType" onchange="pressSubmit()"></select>
-		<button id="reset" onclick="pressSubmit()">reset</button>
+		<input type="checkbox" id="multiColor" onclick="pressSubmit()">color scale</form>
+		<button id="reset" onclick="pressSubmit()">reset all</button>
 	</form>
 
-	<div id="title">mtTool</div>
+	<div id="title"></div>
 </div>
 
 <div id = "output">
