@@ -3,6 +3,7 @@ Clean this dirty af spaghetti code
 Add option for multi colored scale output
 Add show notes across whole piano option
 Add more chord variations & Update color scheme
+Redesign
 
 PROBABLY:
 Add labels or on hover pop-ups to notes on piano
