@@ -8,14 +8,26 @@
 </head>
 
 <body onload="pressSubmit()">
-<div id="mt-container">
 
+<div id="container">
+
+<div id ="header-cont"> <header>
+		<div id="page-title">mtTool</div>
+		<nav>
+			<a href="https://github.com/mikecoram/mtTool">About</a>
+			<a href="https://github.com/mikecoram/mtTool">GitHub</a>
+			<a href="https://github.com/mikecoram/mtTool/archive/master.zip">Download ZIP</a>
+		</nav>
+	</header>
+</div>
+
+<div id="mt-container">
 <div id="top">
 	<form id="input" onsubmit="return false">
 	Key Selector:
 		<select id="inputRoot" onchange="pressSubmit()"></select>
 		<select id="inputType" onchange="pressSubmit()"></select>
-		<input type="checkbox" id="multiColor" onclick="pressSubmit()">color scale</form>
+		<input type="checkbox" id="multiColor" onclick="pressSubmit()">color scale</input>
 		<button id="reset" onclick="pressSubmit()">reset all</button>
 	</form>
 
@@ -101,6 +113,7 @@
 	<canvas id="chordPiano" width="765" height="150"></canvas>
 </div>
 
+</div>
 </div>
 </body>
 </html>
