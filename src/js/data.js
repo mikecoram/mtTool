@@ -34,8 +34,9 @@ function storeChordType(name,amount,color) {
 	localStorage.setItem(name, JSON.stringify(sType));
 }
 //chord storage
+var othercolor = '#8BA2FF';
 //major chord
-var majcolor = '#FFFF9D'
+var majcolor = '#FFFF9D';
 storeChordType('major',3,majcolor);
 storeNote('majornote1','major',0,'I');
 storeNote('majornote2','major',4,'III');
@@ -47,13 +48,13 @@ storeNote('minornote1','minor',0,'I');
 storeNote('minornote2','minor',3,'IIIb');
 storeNote('minornote3','minor',7,'V');
 //augmented chord
-var augcolor = 'red';
+var augcolor = othercolor;
 storeChordType('augmented',3,augcolor);
 storeNote('augmentednote1','augmented',0,'I');
 storeNote('augmentednote2','augmented',4,'III#');
 storeNote('augmentednote3','augmented',8,'V#');
 //diminished chord
-var dimcolor = '#FF6138'
+var dimcolor = '#EE6138'
 storeChordType('diminished',3,dimcolor);
 storeNote('diminishednote1','diminished',0,'I');
 storeNote('diminishednote2','diminished',3,'IIIb');

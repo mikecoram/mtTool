@@ -1,12 +1,10 @@
 TODO:
 Centralise chord note output
-Add more chord variations & Update color scheme
+Add more chord variations
 
 POSSIBLE:
 Add labels or on hover pop-ups to notes on piano
-
-MAYBE:
-Add show notes across whole piano option
-Implement guitar representation
-Implement circle of fifths GUI
+Show notes across whole piano option
+Guitar representation
+Circle of fifths key selector
 Android version
