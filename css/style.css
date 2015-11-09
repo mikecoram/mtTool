@@ -36,7 +36,7 @@ nav {
 	text-align:right;
 }
 
-a {
+nav a {
 	text-decoration:none;
 	color:rgba(255,255,255,0.9);
 	font-size:14px;
@@ -47,7 +47,7 @@ a {
 	transition:all 0.2s;
 }
 
-a:hover {
+nav a:hover {
 	background-color:rgba(255,255,255,0.3);
 }
 
@@ -62,12 +62,8 @@ a:hover {
 	width:765px;
 }
 
-#top {
+#input {
 	height:2em;
-}
-
-#reset {
-	margin-left:50%;
 }
 
 #multiColor {
