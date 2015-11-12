@@ -3,8 +3,8 @@ Centralise chord note output
 Add more chord variations
 
 POSSIBLE:
-Add labels or on hover pop-ups to notes on piano
-Show notes across whole piano option
+On hover pop-ups to label notes on piano
+Add 'show notes across whole piano' option
 Guitar representation
 Circle of fifths key selector
 Android version
